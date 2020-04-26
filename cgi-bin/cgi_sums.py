@@ -6,4 +6,15 @@ cgitb.enable()
 
 print("Content-type: text/plain")
 print()
-print("Your job is to make this work")
+
+form = cgi.FieldStorage()
+stringlist = form.getlist('operand')
+
+try:
+    total = sum(map(int, stringlist))
+    body = 'The sum of all operands is {}.'.format(total)
+except (ValueError, TypeError):
+    body = "Unable to calculate a sum: please provide integer operands"
+
+print(body)
+
